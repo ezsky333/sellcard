@@ -1,0 +1,36 @@
+# Build outputs
+/server
+/bin/
+/dist/
+
+# Local configuration (敏感信息)
+config.yaml
+config.local.yaml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+*.o
+*.a
+*.so
+.env
+go.sum.bak
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+*.tmp
+/tmp_bcrypt.go

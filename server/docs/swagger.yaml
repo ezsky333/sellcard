@@ -1,0 +1,71 @@
+definitions:
+  controller.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+info:
+  contact:
+    email: support@example.com
+    name: API 支持
+    url: http://www.example.com/support
+  description: 售卡系统身份认证 API 服务器
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 售卡系统 API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 使用用户名和密码登录，获取 JWT token
+      parameters:
+      - description: 登录凭证
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功，返回 token 和用户信息
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: 请求参数无效
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: 登录凭证错误
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: 服务器内部错误
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 用户登录
+      tags:
+      - 认证
+schemes:
+- http
+- https
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,49 @@
+# 服务器配置示例
+# 对于生产环境，建议使用环境变量覆盖敏感配置
+
+server:
+  host: "0.0.0.0"
+  port: 8080
+
+database:
+  host: "127.0.0.1"
+  port: 3306
+  user: "root"
+  password: "rootpwd"  # 生产环境：使用 DATABASE_PASSWORD 环境变量覆盖
+  dbname: "sellcard"
+
+jwt:
+  secret: "change_this_secret"  # 生产环境：使用 JWT_SECRET 环境变量覆盖
+  ttl_minutes: 1440
+
+swagger:
+  enabled: false  # 生产环境：禁用 Swagger
+
+turnstile:
+  # 生产环境：使用以下环境变量设置
+  # TURNSTILE_ENABLED=true
+  # TURNSTILE_SITE_KEY=your_site_key
+  # TURNSTILE_SECRET_KEY=your_secret_key
+  enabled: false
+  site_key: ""
+  secret_key: ""
+
+# 支持的环境变量：
+# 服务器配置
+#   SERVER_HOST - 服务器地址
+#   SERVER_PORT - 服务器端口
+# 数据库配置
+#   DATABASE_HOST - 数据库地址
+#   DATABASE_PORT - 数据库端口
+#   DATABASE_USER - 数据库用户名
+#   DATABASE_PASSWORD - 数据库密码
+#   DATABASE_NAME - 数据库名
+# JWT 配置
+#   JWT_SECRET - JWT 密钥
+#   JWT_TTL_MINUTES - JWT 过期时间（分钟）
+# Swagger 配置
+#   SWAGGER_ENABLED - 是否启用 Swagger
+# Turnstile 配置
+#   TURNSTILE_ENABLED - 是否启用 Turnstile
+#   TURNSTILE_SITE_KEY - Turnstile Site Key
+#   TURNSTILE_SECRET_KEY - Turnstile Secret Key

@@ -1,0 +1,22 @@
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Editor
+.editorconfig
+
+# Environment
+.env
+.env.local
+.env.*.local
