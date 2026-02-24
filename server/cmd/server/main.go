@@ -1,16 +1,16 @@
 package main
 
 import (
-    "log"
-    "sellcard/server/internal/config"
-    "sellcard/server/internal/model"
-    "sellcard/server/internal/repository"
-    "sellcard/server/internal/routes"
-    "time"
+	"log"
+	"sellcard/server/internal/config"
+	"sellcard/server/internal/model"
+	"sellcard/server/internal/repository"
+	"sellcard/server/internal/routes"
+	"time"
 
-    "github.com/gin-gonic/gin"
-    "gorm.io/driver/mysql"
-    "gorm.io/gorm"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 // @title 售卡系统 API
@@ -32,37 +32,37 @@ import (
 // @name Authorization
 
 func main() {
-    cfg, err := config.LoadConfig("./configs/config.yaml")
-    if err != nil {
-        log.Fatalf("load config: %v", err)
-    }
-    dsn := cfg.DatabaseDSN()
-    db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-    if err != nil {
-        log.Fatalf("failed to connect db: %v", err)
-    }
+	cfg, err := config.LoadConfig("./configs/config.yaml")
+	if err != nil {
+		log.Fatalf("load config: %v", err)
+	}
+	dsn := cfg.DatabaseDSN()
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("failed to connect db: %v", err)
+	}
 
-    // create table if not exists (avoid destructive alter operations by AutoMigrate)
-    if !db.Migrator().HasTable(&model.User{}) {
-        if err := db.Migrator().CreateTable(&model.User{}); err != nil {
-            log.Fatalf("create table: %v", err)
-        }
-    }
+	// create table if not exists (avoid destructive alter operations by AutoMigrate)
+	if !db.Migrator().HasTable(&model.User{}) {
+		if err := db.Migrator().CreateTable(&model.User{}); err != nil {
+			log.Fatalf("create table: %v", err)
+		}
+	}
 
-    // set up repository instances
-    repository.SetDB(db)
+	// set up repository instances
+	repository.SetDB(db)
 
-    r := gin.Default()
-    r.Use(func(c *gin.Context) {
-        // simple request start time header
-        c.Writer.Header().Set("X-Server-Time", time.Now().Format(time.RFC3339))
-        c.Next()
-    })
+	r := gin.Default()
+	r.Use(func(c *gin.Context) {
+		// simple request start time header
+		c.Writer.Header().Set("X-Server-Time", time.Now().Format(time.RFC3339))
+		c.Next()
+	})
 
-    routes.RegisterRoutes(r)
+	routes.RegisterRoutes(r)
 
-    addr := cfg.ServerAddress()
-    if err := r.Run(addr); err != nil {
-        log.Fatalf("server run: %v", err)
-    }
+	addr := cfg.ServerAddress()
+	if err := r.Run(addr); err != nil {
+		log.Fatalf("server run: %v", err)
+	}
 }
